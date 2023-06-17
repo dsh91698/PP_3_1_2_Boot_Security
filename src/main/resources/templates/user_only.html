@@ -38,12 +38,12 @@
     <div th:text="${user.getUserName()}"></div>
     <div th:text="${user.getUserAge()}"></div>
     <div th:text="${user.getUserStatus()}"></div>
-    <a th:href="@{{id}/edit (id=${user.getId()}) }" class="button button-edit">Edit User</a>
-    <a class="button" href="/admin">Back to all the Users</a>
+<!--    <a th:href="@{{id}/edit (id=${user.getId()}) }" class="button button-edit">Edit User</a>-->
+<!--    <a class="button" href="/admin">Back to all the Users</a>-->
 
-    <form   th:method="DELETE" th:action="@{ {id} (id=${user.getId()}) }" th:object="${user}">
-        <button type="submit" class="button button-delete">Delete User</button>
-    </form>
+<!--    <form   th:method="DELETE" th:action="@{ {id} (id=${user.getId()}) }" th:object="${user}">-->
+<!--        <button type="submit" class="button button-delete">Delete User</button>-->
+<!--    </form>-->
 
 </div>
 

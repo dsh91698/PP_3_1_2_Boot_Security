@@ -1,11 +1,46 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>ADMIN Page - Spring Security Example</title>
+    <meta charset="UTF-8">
+    <style>
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .button-edit {
+            background-color: darkblue;
+        }
+    </style>
+    <title>Users</title>
 </head>
-
 <body>
-<h1> ADMIN, welcome spring boot security page! </h1>
-</body>
 
+<table>
+    <thead>
+    <tr>
+        <th>User ID</th>
+        <th>User Name</th>
+        <th>User Status</th>
+        <th>User Age</th>
+        <th>Edit User</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.getId()}"></td>
+        <td th:text="${user.getUserName()}"></td>
+        <td th:text="${user.getUserStatus()}"></td>
+        <td th:text="${user.getUserAge()}"></td>
+        <td><a th:href="@{ admin/{id} (id=${user.getId()}) }" class="button button-edit">Go to User Details page</a></td>
+    </tr>
+    </tbody>
+</table>
+<a th:href="@{ admin/new}" class="button">Create New User</a>
+</body>
 </html>
