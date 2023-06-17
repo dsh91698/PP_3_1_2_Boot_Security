@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .button-edit {
+            background-color: darkblue;
+        }
+    </style>
+    <title>Users</title>
+</head>
+<body>
+
+<table>
+    <thead>
+    <tr>
+        <th>User ID</th>
+        <th>User Name</th>
+        <th>User Status</th>
+        <th>User Age</th>
+        <th>Edit User</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.getId()}"></td>
+        <td th:text="${user.getUserName()}"></td>
+        <td th:text="${user.getUserStatus()}"></td>
+        <td th:text="${user.getUserAge()}"></td>
+        <td><a th:href="@{ users/{id} (id=${user.getId()}) }" class="button button-edit">Go to User Details page</a></td>
+    </tr>
+    </tbody>
+</table>
+<a th:href="@{ users/new}" class="button">Create New User</a>
+</body>
+</html>
