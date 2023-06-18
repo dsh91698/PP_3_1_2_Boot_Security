@@ -2,11 +2,16 @@ package ru.kata.spring.boot_security.demo.model;
 
 //import jakarta.persistence.*;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,21 +23,41 @@ public class User {
     @Column(name = "age")
     private int userAge;
 
+    @Column(name = "login", unique = true)
+    private String login;
+
+    @Column(name = "password")
+    private String password;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private List<Role> roles;
+
     public User() {
     }
 
-    public User(String userName, String userStatus, int userAge) {
+    public User(String userName, String userStatus, int userAge, String login, String password, List<Role> roles) {
         this.userName = userName;
         this.userStatus = userStatus;
         this.userAge = userAge;
+        this.login = login;
+        this.password = password;
+        this.roles = roles;
     }
 
-    public User(Long id, String userName, String userStatus, int userAge) {
-        this.id = id;
-        this.userName = userName;
-        this.userStatus = userStatus;
-        this.userAge = userAge;
-    }
+//    public User(String userName, String userStatus, int userAge) {
+//        this.userName = userName;
+//        this.userStatus = userStatus;
+//        this.userAge = userAge;
+//    }
+
+//    public User(Long id, String userName, String userStatus, int userAge) {
+//        this.id = id;
+//        this.userName = userName;
+//        this.userStatus = userStatus;
+//        this.userAge = userAge;
+//    }
+
 
     public Long getId() {
         return id;
@@ -66,12 +91,57 @@ public class User {
         this.userAge = userAge;
     }
 
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
     @Override
-    public String toString() {
-        return "User{" +
-                "userName='" + userName + '\'' +
-                ", userStatus='" + userStatus + '\'' +
-                ", userAge=" + userAge +
-                '}';
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return login;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 }
