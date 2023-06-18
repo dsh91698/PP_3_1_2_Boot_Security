@@ -44,6 +44,13 @@
         <option value="registered">Registered</option>
     </select>
 
+    <label for="login">User login</label>
+    <input type="text" th:field="*{login}" id="login">
+
+    <label for="password">User password</label>
+    <input type="text" th:field="*{password}" id="password">
+
+
     <button type="submit">Update User</button>
 </form>
 
