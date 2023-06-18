@@ -37,7 +37,7 @@ public class UserController {
 
     @GetMapping("user")//TODO: show only authorized User
     public String showUserById(ModelMap model) {
-        Long id = (long) 33;
+        Long id = (long) 1;
         User user = userService.getById(id);
         model.addAttribute("user", user);
         return "user_only";
