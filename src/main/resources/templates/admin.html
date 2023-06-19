@@ -20,6 +20,10 @@
         .button-logout {
             background-color: coral;
         }
+        .roles_wrapper {
+            display: flex;
+            flex-direction: column;
+        }
     </style>
     <title>Users</title>
 </head>
@@ -41,6 +45,11 @@
         <td th:text="${user.getUserName()}"></td>
         <td th:text="${user.getUserStatus()}"></td>
         <td th:text="${user.getUserAge()}"></td>
+
+        <td>
+            <div th:each="role : ${user.getRoles()}" class="roles_wrapper" th:text="${role.getName()}"></div>
+        </td>
+
         <td><a th:href="@{ admin/{id} (id=${user.getId()}) }" class="button button-edit">Go to User Details page</a>
         </td>
     </tr>
