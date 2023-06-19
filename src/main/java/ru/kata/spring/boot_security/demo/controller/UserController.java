@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -35,10 +36,9 @@ public class UserController {
         return "user";
     }
 
-    @GetMapping("user")//TODO: show only authorized User
-    public String showUserById(ModelMap model) {
-        Long id = (long) 1;
-        User user = userService.getById(id);
+    @GetMapping("user")
+    public String showUser(ModelMap model, Authentication authentication) {
+        User user = (User) authentication.getPrincipal(); // Get the authenticated user
         model.addAttribute("user", user);
         return "user_only";
     }
