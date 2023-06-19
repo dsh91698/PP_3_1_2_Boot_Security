@@ -29,7 +29,8 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER) //TODO
     @JoinColumn(name = "user_id")
     private List<Role> roles;
 
@@ -44,19 +45,6 @@ public class User implements UserDetails {
         this.password = password;
         this.roles = roles;
     }
-
-//    public User(String userName, String userStatus, int userAge) {
-//        this.userName = userName;
-//        this.userStatus = userStatus;
-//        this.userAge = userAge;
-//    }
-
-//    public User(Long id, String userName, String userStatus, int userAge) {
-//        this.id = id;
-//        this.userName = userName;
-//        this.userStatus = userStatus;
-//        this.userAge = userAge;
-//    }
 
 
     public Long getId() {
@@ -99,6 +87,19 @@ public class User implements UserDetails {
         this.login = login;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
@@ -133,15 +134,16 @@ public class User implements UserDetails {
         return true;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", userStatus='" + userStatus + '\'' +
+                ", userAge=" + userAge +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
+                '}';
     }
 }
