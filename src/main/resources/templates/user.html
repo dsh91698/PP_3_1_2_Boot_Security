@@ -19,6 +19,10 @@
         .button-delete {
             background-color: darkred;
         }
+        .button-logout {
+            background-color: coral;
+        }
+
         .wrapper {
             display: flex;
             flex-direction: column;
@@ -46,6 +50,7 @@
     </form>
 
 </div>
+<a th:href="@{/logout}" class="button button-logout">Logout</a>
 
 </body>
 </html>

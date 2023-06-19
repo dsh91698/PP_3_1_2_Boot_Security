@@ -13,8 +13,12 @@
             font-size: 16px;
             cursor: pointer;
         }
+
         .button-edit {
             background-color: darkblue;
+        }
+        .button-logout {
+            background-color: coral;
         }
     </style>
     <title>Users</title>
@@ -37,10 +41,12 @@
         <td th:text="${user.getUserName()}"></td>
         <td th:text="${user.getUserStatus()}"></td>
         <td th:text="${user.getUserAge()}"></td>
-        <td><a th:href="@{ admin/{id} (id=${user.getId()}) }" class="button button-edit">Go to User Details page</a></td>
+        <td><a th:href="@{ admin/{id} (id=${user.getId()}) }" class="button button-edit">Go to User Details page</a>
+        </td>
     </tr>
     </tbody>
 </table>
 <a th:href="@{ admin/new}" class="button">Create New User</a>
+<a th:href="@{/logout}" class="button button-logout">Logout</a>
 </body>
 </html>
