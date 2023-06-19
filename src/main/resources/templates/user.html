@@ -30,6 +30,11 @@
             gap: 15px;
             margin: auto;
         }
+        .roles_wrapper {
+            display: flex;
+            flex-direction: column;
+        }
+
     </style>
 
     <title>User data</title>
@@ -42,6 +47,8 @@
     <div th:text="${user.getUserName()}"></div>
     <div th:text="${user.getUserAge()}"></div>
     <div th:text="${user.getUserStatus()}"></div>
+    <div th:each="role : ${user.getRoles()}" class="roles_wrapper" th:text="${role.getName()}"></div>
+
     <a th:href="@{{id}/edit (id=${user.getId()}) }" class="button button-edit">Edit User</a>
     <a class="button" href="/admin">Back to all the Users</a>
 
