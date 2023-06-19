@@ -16,14 +16,18 @@ public class AddUsersToDb {
     @Autowired
     public AddUsersToDb(UserService userService) {
         List<Role> userRole = new ArrayList<>();
-        userRole.add(new Role("USER"));
+        userRole.add(new Role("ROLE_USER"));
+//        userRole.add(new Role("USER"));
 
         List<Role> adminRole = new ArrayList<>();
-        adminRole.add(new Role("ADMIN"));
+        adminRole.add(new Role("ROLE_ADMIN"));
+//        adminRole.add(new Role("ADMIN"));
 
         List<Role> adminAndUserRoles = new ArrayList<>();
-        adminAndUserRoles.add(new Role("ADMIN"));
-        adminAndUserRoles.add(new Role("USER"));
+        adminAndUserRoles.add(new Role("ROLE_ADMIN"));
+//        adminAndUserRoles.add(new Role("ADMIN"));
+        adminAndUserRoles.add(new Role("ROLE_USER"));
+//        adminAndUserRoles.add(new Role("USER"));
 
         this.userService = userService;
         userService.addUser(new User("Anand Baulk", "active", 25, "anand","anand", adminAndUserRoles));
