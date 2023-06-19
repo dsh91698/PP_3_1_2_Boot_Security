@@ -20,6 +20,7 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
+
     @GetMapping(value = "/")
     public String rootRedirect() {
         return "redirect:/admin";
@@ -78,14 +79,10 @@ public class UserController {
         userService.updateUser(user);
         return "redirect:/admin";
     }
+
     @DeleteMapping("admin/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
         userService.deleteById(id);
         return "redirect:/admin";
     }
-
-
-
-
-
 }
