@@ -107,12 +107,12 @@ public class User implements UserDetails {
 
     public String getPassword() {
         return password;
-    }
+    } //password
 
     @Override
     public String getUsername() {
         return login;
-    }
+    } //login
 
     @Override
     public boolean isAccountNonExpired() {
