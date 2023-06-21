@@ -12,10 +12,11 @@ public interface UserDao {
 
     User getById(Long id); //read
 
+    User findByLogin(String login);
+
     List<User> selectAllUsersFromDatabase(); //read
 
     void updateUser(User user); //update
-
 
     void deleteById(Long id); //delete
 }

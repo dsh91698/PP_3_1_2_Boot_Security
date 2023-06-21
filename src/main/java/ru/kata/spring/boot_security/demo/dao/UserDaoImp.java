@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import ru.kata.spring.boot_security.demo.model.User;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
@@ -28,6 +29,18 @@ public class UserDaoImp implements UserDao {
         return entityManager.find(User.class, id);
     }
 
+    @Override
+    public User findByLogin(String login) {
+        TypedQuery<User> query = entityManager.createQuery(
+                "SELECT user FROM User user WHERE user.login = :login", User.class);
+        query.setParameter("login", login);
+
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null; // User not found
+        }
+    }
 
     @Override
     public List<User> selectAllUsersFromDatabase() {
