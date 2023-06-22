@@ -58,10 +58,24 @@
         <option value="registered">Registered</option>
     </select>
 
+    <!---->
+    <label for="userRole">User Role</label>
+    <div>
+        <input type="checkbox" id="userRole" name="roles" value="ROLE_USER"
+               th:checked="true"/>
+        <label for="userRole">USER</label>
+    </div>
+    <div>
+        <input type="checkbox" id="adminRole" name="roles" value="ROLE_ADMIN"
+               th:checked="false"/>
+        <label for="adminRole">ADMIN</label>
+    </div>
+    <!---->
+
     <label for="login">User login</label>
     <input type="text" th:field="*{login}" id="login">
 
-    <label for="password">User login</label>
+    <label for="password">User password</label>
     <input type="text" th:field="*{password}" id="password">
 
 

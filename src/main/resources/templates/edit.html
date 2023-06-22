@@ -11,6 +11,7 @@
             width: 250px;
             margin: auto;
         }
+
         button {
             display: inline-block;
             padding: 10px 20px;
@@ -22,6 +23,7 @@
             cursor: pointer;
             border: 1px solid darkgreen;
         }
+
         .button {
             display: inline-block;
             padding: 10px 20px;
@@ -64,9 +66,23 @@
 
     <label for="password">User password</label>
     <input type="password" th:field="*{password}" id="password" placeholder="Enter new password">
+    <div class="roles_wrapper">
+        <div class="roles" th:each="role : ${user.getRoles()}" th:text="${role.getName()}"></div>
+    </div>
 
-
-
+    <!---->
+    <label for="userRole">User Role</label>
+    <div>
+        <input type="checkbox" id="userRole" name="roles" value="ROLE_USER"
+               th:checked="true"/>
+        <label for="userRole">USER</label>
+    </div>
+    <div>
+        <input type="checkbox" id="adminRole" name="roles" value="ROLE_ADMIN"
+               th:checked="false"/>
+        <label for="adminRole">ADMIN</label>
+    </div>
+    <!---->
     <button type="submit">Update User</button>
 </form>
 
