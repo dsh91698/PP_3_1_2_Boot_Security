@@ -28,10 +28,11 @@ public class User implements UserDetails {
 
     @Column(name = "password")
     private String password;
-
+    @ManyToMany(fetch = FetchType.LAZY)
+//    @ManyToMany(fetch = FetchType.EAGER)
 //    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER) //TODO
-    @JoinColumn(name = "user_id")
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER) //TODO
+//    @JoinColumn(name = "user_id")
     private List<Role> roles;
 
     public User() {
