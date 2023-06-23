@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -33,12 +34,12 @@ public class User implements UserDetails {
 //    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER) //TODO
 //    @JoinColumn(name = "user_id")
-    private List<Role> roles;
+    private Set<Role> roles;
 
     public User() {
     }
 
-    public User(String userName, String userStatus, int userAge, String login, String password, List<Role> roles) {
+    public User(String userName, String userStatus, int userAge, String login, String password, Set<Role> roles) {
         this.userName = userName;
         this.userStatus = userStatus;
         this.userAge = userAge;
@@ -92,11 +93,11 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public List<Role> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 
@@ -146,5 +147,20 @@ public class User implements UserDetails {
                 ", password='" + password + '\'' +
                 ", roles=" + roles +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+
+        User user = (User) o;
+
+        return getId().equals(user.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getId().hashCode();
     }
 }

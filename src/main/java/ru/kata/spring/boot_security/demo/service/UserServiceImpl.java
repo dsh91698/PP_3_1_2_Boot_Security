@@ -9,9 +9,7 @@ import ru.kata.spring.boot_security.demo.dao.UserDao;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Transactional
 @Service
@@ -31,9 +29,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public void addUser(User user) {
         if (user.getRoles() == null) { // USER role set by default
-            user.setRoles(Arrays.asList(roleDao.getRoleByName("ROLE_USER")));
+            user.setRoles(Set.of(roleDao.getRoleByName("ROLE_USER")));
         } else {
-            List<Role> rolesToSet = new ArrayList<>();//create empty role list
+            Set<Role> rolesToSet = new HashSet<>();//create empty role set
             for (Role role : user.getRoles()) {
                 rolesToSet.add(roleDao.getRoleByName(role.getName()));// check for setted in form roles and get same role from DB
             }
@@ -60,9 +58,9 @@ public class UserServiceImpl implements UserService {
         User userFromDB = userDao.getById(user.getId());
 
         if (user.getRoles() == null) {
-            user.setRoles(new ArrayList<>(userFromDB.getRoles()));// if no roles set in html-form, get old roles from DB
+            user.setRoles(new HashSet<>(userFromDB.getRoles()));// if no roles set in html-form, get old roles from DB
         } else {
-            List<Role> rolesToSet = new ArrayList<>();//empty new role list
+            Set<Role> rolesToSet = new HashSet<>();//empty new role set
             for (Role role : user.getRoles()) {
                 rolesToSet.add(roleDao.getRoleByName(role.getName()));
             }

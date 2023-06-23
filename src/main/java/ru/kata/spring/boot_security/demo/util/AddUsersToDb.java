@@ -7,9 +7,7 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Component
 public class AddUsersToDb {
@@ -21,14 +19,14 @@ public class AddUsersToDb {
         this.userService = userService;
         this.roleService = roleService;
         //create roleList and fill in Roles-table in DB
-        List<Role> roleList = new ArrayList<>(Arrays.asList(new Role("ROLE_USER"), new Role("ROLE_ADMIN")));
+        Set<Role> roleList = new HashSet<>(Arrays.asList(new Role("ROLE_USER"), new Role("ROLE_ADMIN")));
         roleService.addRolesToDb(roleList);
 
-        List<Role> userRole = Arrays.asList(roleService.getRoleByName("ROLE_USER"));
+        Set<Role> userRole = Set.of(roleService.getRoleByName("ROLE_USER"));
 
-        List<Role> adminRole = Arrays.asList(roleService.getRoleByName("ROLE_ADMIN"));
+        Set<Role> adminRole = Set.of(roleService.getRoleByName("ROLE_ADMIN"));
 
-        List<Role> adminAndUserRoles = Arrays.asList(roleService.getRoleByName("ROLE_USER"), roleService.getRoleByName("ROLE_ADMIN"));
+        Set<Role> adminAndUserRoles = Set.of(roleService.getRoleByName("ROLE_USER"), roleService.getRoleByName("ROLE_ADMIN"));
 
         userService.addUser(new User("Anand Baulk", "active", 25, "anand", "anand", adminAndUserRoles));
         userService.addUser(new User("Caleb Clemens", "active", 15, "user", "user", userRole));

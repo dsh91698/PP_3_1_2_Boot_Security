@@ -6,6 +6,7 @@ import ru.kata.spring.boot_security.demo.dao.RoleDao;
 import ru.kata.spring.boot_security.demo.model.Role;
 
 import java.util.List;
+import java.util.Set;
 
 @Transactional
 @Service
@@ -18,7 +19,7 @@ import java.util.List;
 
 
     @Override
-    public void addRolesToDb(List<Role> roles) {
+    public void addRolesToDb(Set<Role> roles) {
         roleDao.addRolesToDb(roles);
     }
 

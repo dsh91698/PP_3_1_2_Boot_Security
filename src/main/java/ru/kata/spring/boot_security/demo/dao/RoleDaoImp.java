@@ -6,6 +6,7 @@ import ru.kata.spring.boot_security.demo.model.Role;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public class RoleDaoImp implements RoleDao {
@@ -13,7 +14,7 @@ public class RoleDaoImp implements RoleDao {
     private EntityManager entityManager;
 
     @Override
-    public void addRolesToDb(List<Role> roles) {
+    public void addRolesToDb(Set<Role> roles) {
         for (Role role : roles) {
             entityManager.persist(role);
         }
