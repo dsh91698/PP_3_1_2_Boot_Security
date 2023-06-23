@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.dao;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ru.kata.spring.boot_security.demo.model.User;
 
@@ -27,7 +28,8 @@ public class UserDaoImp implements UserDao {
     @Override
     public User findByLogin(String login) {
         TypedQuery<User> query = entityManager.createQuery(
-                "SELECT user FROM User user WHERE user.login = :login", User.class);
+                "SELECT DISTINCT user FROM User user LEFT JOIN FETCH user.roles WHERE user.login = :login", User.class
+        );
         query.setParameter("login", login);
 
         try {
