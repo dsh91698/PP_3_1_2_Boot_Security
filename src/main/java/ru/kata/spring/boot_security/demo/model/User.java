@@ -1,13 +1,11 @@
 package ru.kata.spring.boot_security.demo.model;
 
-//import jakarta.persistence.*;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -29,12 +27,17 @@ public class User implements UserDetails {
 
     @Column(name = "password")
     private String password;
-    @ManyToMany(fetch = FetchType.LAZY)
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER) //TODO
-//    @JoinColumn(name = "user_id")
-    private Set<Role> roles;
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    },
+            fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "user_role",
+            joinColumns = @JoinColumn(name = "users_id"),
+            inverseJoinColumns = @JoinColumn(name = "roles_id")
+    )
+    private Set<Role> roles = new HashSet<>();
 
     public User() {
     }
