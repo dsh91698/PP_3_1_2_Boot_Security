@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
@@ -103,6 +104,14 @@ public class User implements UserDetails {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+    public String getAuthoritiesAsString() {
+        return roles.stream()
+                .map(Role::getName)
+                .map(roleName -> roleName.replace("ROLE_", ""))
+                .collect(Collectors.joining(", "));
+    }
+
 
 
     @Override
