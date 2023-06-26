@@ -53,6 +53,13 @@ public class Role implements GrantedAuthority {
         this.name = name;
     }
 
+    public Boolean isAdmin() {
+        return this.getName() == "ROLE_ADMIN";
+    }
+    public Boolean isUser() {
+        return this.getName() == "ROLE_USER";
+    }
+
     public Set<User> getUsersSet() {
         return usersSet;
     }
