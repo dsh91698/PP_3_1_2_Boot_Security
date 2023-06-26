@@ -48,7 +48,7 @@
     <h2>Create New User</h2>
 
     <label for="name">User Name</label>
-    <input type="text" th:field="*{userName}" id="name">
+    <input type="text" th:field="*{userName}" id="name" required>
 
     <label for="age">User age</label>
     <input type="text" th:field="*{userAge}" id="age">
@@ -76,10 +76,10 @@
     <!---->
 
     <label for="login">User login</label>
-    <input type="text" th:field="*{login}" id="login">
+    <input type="text" th:field="*{login}" id="login" required>
 
     <label for="password">User password</label>
-    <input type="text" th:field="*{password}" id="password">
+    <input type="text" th:field="*{password}" id="password" required>
 
 
     <button type="submit">Create User</button>
