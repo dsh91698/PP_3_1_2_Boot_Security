@@ -67,7 +67,8 @@ public class UserServiceImpl implements UserService {
             user.setRoles(rolesToSet);//set new Roles into user
         }
 
-        boolean hasNewPassword = user.getPassword() != "";// is there new password in input?
+//        boolean hasNewPassword = user.getPassword() != "";// is there new password in input?
+        boolean hasNewPassword = !(user.getPassword().isEmpty());// is there new password in input?
         if (hasNewPassword) {// if something was typed in password field - encode password and add into updated user
             String encodedPassword = passwordEncoder.encode(user.getPassword());
             user.setPassword(encodedPassword);
