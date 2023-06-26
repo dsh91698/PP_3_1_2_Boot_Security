@@ -49,8 +49,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> selectAllUsersFromDatabase() {
-        return userDao.selectAllUsersFromDatabase();
+    public List<User> getAllUsersFromDatabase() {
+        return userDao.getAllUsersFromDatabase();
     }
 
     @Override

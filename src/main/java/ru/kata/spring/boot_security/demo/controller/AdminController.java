@@ -20,7 +20,7 @@ public class AdminController {
 
     @GetMapping(value = "/admin")
     public String showAllUsers(ModelMap model) {
-        List<User> usersForShow = userService.selectAllUsersFromDatabase();
+        List<User> usersForShow = userService.getAllUsersFromDatabase();
         model.addAttribute("users", usersForShow);
         return "admin";
     }

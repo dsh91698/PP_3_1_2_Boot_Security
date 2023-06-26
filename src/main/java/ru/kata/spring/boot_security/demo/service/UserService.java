@@ -9,7 +9,7 @@ public interface UserService {
 
     User getById(Long id); //read
 
-    List<User> selectAllUsersFromDatabase(); //read
+    List<User> getAllUsersFromDatabase(); //read
 
     void updateUser(User user); //update
 

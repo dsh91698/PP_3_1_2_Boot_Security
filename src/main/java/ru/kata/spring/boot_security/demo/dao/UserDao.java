@@ -14,7 +14,7 @@ public interface UserDao {
 
     User findByLogin(String login);
 
-    List<User> selectAllUsersFromDatabase(); //read
+    List<User> getAllUsersFromDatabase(); //read
 
     void updateUser(User user); //update
 
