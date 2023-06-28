@@ -114,8 +114,6 @@
                 </tr>
                 </tbody>
             </table>
-            <a th:href="@{ admin/new}" class="button">Create New User</a>
-            <a th:href="@{/logout}" class="button button-logout">Logout</a>
 
         </div>
 
@@ -123,9 +121,50 @@
             <div class="col p-3 mb-2 bg-light text-dark">
                 <p class="h4">Add new user</p>
             </div>
+<!--form for NEW user---------START------------->
+            <form th:method="POST" th:action="@{/admin}" th:object="${user}">
+                <h2>Create New User</h2>
 
-            Create new User will be here
-            <!--                    <iframe src="http://localhost:8080/admin/new" style="width: 100%; height: 500px;"></iframe>-->
+                <label for="name">User Name</label>
+                <input type="text" th:field="*{userName}" id="name" required>
+
+                <label for="age">User age</label>
+                <input type="text" th:field="*{userAge}" id="age">
+
+                <label for="status">User status</label>
+                <select th:field="*{userStatus}" id="status">
+                    <option value="active">Active</option>
+                    <option value="banned">Banned</option>
+                    <option value="read-only">Read-only</option>
+                    <option value="registered">Registered</option>
+                </select>
+
+                <!---->
+                <label for="userRole">User Role</label>
+                <div>
+                    <input type="checkbox" id="userRole" name="roles" value="ROLE_USER"
+                           th:checked="true"/>
+                    <label for="userRole">USER</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="adminRole" name="roles" value="ROLE_ADMIN"
+                           th:checked="false"/>
+                    <label for="adminRole">ADMIN</label>
+                </div>
+                <!---->
+
+                <label for="login">User login</label>
+                <input type="text" th:field="*{login}" id="login" required>
+
+                <label for="password">User password</label>
+                <input type="text" th:field="*{password}" id="password" required>
+
+
+                <button type="submit">Create User</button>
+            </form>
+
+            <!--form for NEW user------------FINISH-------------->
+
         </div>
     </div>
 </div>
