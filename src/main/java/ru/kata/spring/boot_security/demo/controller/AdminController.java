@@ -22,7 +22,7 @@ public class AdminController {
     public String showAllUsers(ModelMap model) {
         List<User> usersForShow = userService.getAllUsersFromDatabase();
         model.addAttribute("users", usersForShow);
-        model.addAttribute("user", new User()); //tab for NEW user create
+        model.addAttribute("userNew", new User()); //tab for NEW user create
         return "admin";
     }
 
