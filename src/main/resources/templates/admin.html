@@ -34,10 +34,12 @@
             display: flex;
             flex-direction: column;
         }
+
         .name-for-roles {
             margin-right: 5px;
             font-weight: bold;
         }
+
         .roles-for-name {
             margin-left: 5px;
         }
@@ -50,15 +52,16 @@
     <div class="row bg-dark">
         <!-- col- elements here -->
         <div class="col-auto p-3 mb-2 text-white d-flex">
-            <p class="name-for-roles" sec:authentication="name"></p> with roles: <p class="roles-for-name" th:text="${#authentication.principal.getAuthoritiesAsString()}"></p>
-<!--            -->
-<!--            <div sec:authorize="hasRole('USER')">Text visible to User.</div>-->
-<!--            <div sec:authorize="hasRole('ADMIN')">Text visible to Admin.</div>-->
-<!--            <div sec:authorize="isAuthenticated()">-->
-<!--                Text visible only to authenticated users.-->
-<!--            </div>-->
-<!--&lt;!&ndash;                        <div sec:authentication="principal.authorities"></div>&ndash;&gt;-->
-<!--            <div sec:authentication="principal"></div>-->
+            <p class="name-for-roles" sec:authentication="name"></p> with roles: <p class="roles-for-name"
+                                                                                    th:text="${#authentication.principal.getAuthoritiesAsString()}"></p>
+            <!--            -->
+            <!--            <div sec:authorize="hasRole('USER')">Text visible to User.</div>-->
+            <!--            <div sec:authorize="hasRole('ADMIN')">Text visible to Admin.</div>-->
+            <!--            <div sec:authorize="isAuthenticated()">-->
+            <!--                Text visible only to authenticated users.-->
+            <!--            </div>-->
+            <!--&lt;!&ndash;                        <div sec:authentication="principal.authorities"></div>&ndash;&gt;-->
+            <!--            <div sec:authentication="principal"></div>-->
 
             <!--            -->
         </div>
@@ -116,51 +119,62 @@
             </table>
 
         </div>
-
+<!-- new user tab -->
         <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
             <div class="col p-3 mb-2 bg-light text-dark">
                 <p class="h4">Add new user</p>
             </div>
-<!--form for NEW user---------START------------->
-            <form th:method="POST" th:action="@{/admin}" th:object="${user}">
-                <h2>Create New User</h2>
+            <!--form for NEW user---------START------------->
+            <form th:method="POST" th:action="@{/admin}" th:object="${user}"
+                  class="needs-validation row g-3 p-3 d-flex flex-column align-items-center">
 
-                <label for="name">User Name</label>
-                <input type="text" th:field="*{userName}" id="name" required>
-
-                <label for="age">User age</label>
-                <input type="text" th:field="*{userAge}" id="age">
-
-                <label for="status">User status</label>
-                <select th:field="*{userStatus}" id="status">
-                    <option value="active">Active</option>
-                    <option value="banned">Banned</option>
-                    <option value="read-only">Read-only</option>
-                    <option value="registered">Registered</option>
-                </select>
-
-                <!---->
-                <label for="userRole">User Role</label>
-                <div>
-                    <input type="checkbox" id="userRole" name="roles" value="ROLE_USER"
-                           th:checked="true"/>
-                    <label for="userRole">USER</label>
+                <div class="row mb-3 col-md-6 mx-auto position-relative justify-content-center">
+                    <label for="name" class="form-label fw-bold text-center col-sm-4">User Name</label>
+                    <input type="text" th:field="*{userName}" id="name" class="form-control" required>
                 </div>
-                <div>
-                    <input type="checkbox" id="adminRole" name="roles" value="ROLE_ADMIN"
-                           th:checked="false"/>
-                    <label for="adminRole">ADMIN</label>
+
+                <div class="row mb-3 col-md-6 mx-auto justify-content-center">
+                    <label for="age" class="form-label fw-bold text-center col-sm-4">User Age</label>
+                    <input type="text" th:field="*{userAge}" id="age" class="form-control">
                 </div>
-                <!---->
 
-                <label for="login">User login</label>
-                <input type="text" th:field="*{login}" id="login" required>
+                <div class="row mb-3 col-md-6 mx-auto justify-content-center">
+                    <label for="status" class="form-label fw-bold text-center col-sm-4">User Status</label>
+                    <select th:field="*{userStatus}" id="status" class="form-select">
+                        <option value="active">Active</option>
+                        <option value="banned">Banned</option>
+                        <option value="read-only">Read-only</option>
+                        <option value="registered">Registered</option>
+                    </select>
+                </div>
 
-                <label for="password">User password</label>
-                <input type="text" th:field="*{password}" id="password" required>
+                <div class="row mb-3 col-md-6 justify-content-center">
+                    <label class="form-label fw-bold text-center col-sm-4">User Role</label>
+                    <div class="form-check">
+                        <input type="checkbox" id="userRole" name="roles" value="ROLE_USER" th:checked="true"
+                               class="form-check-input">
+                        <label for="userRole" class="form-check-label">USER</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" id="adminRole" name="roles" value="ROLE_ADMIN" th:checked="false"
+                               class="form-check-input">
+                        <label for="adminRole" class="form-check-label">ADMIN</label>
+                    </div>
+                </div>
 
+                <div class="row mb-3 col-md-6 justify-content-center">
+                    <label for="login" class="form-label fw-bold text-center col-sm-4">User Login</label>
+                    <input type="text" th:field="*{login}" id="login" class="form-control" required>
+                </div>
 
-                <button type="submit">Create User</button>
+                <div class="row mb-3 col-md-6 justify-content-center">
+                    <label for="password" class="form-label fw-bold text-center col-sm-4">User Password</label>
+                    <input type="password" th:field="*{password}" id="password" class="form-control" required>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success">Add new User</button>
+                </div>
             </form>
 
             <!--form for NEW user------------FINISH-------------->
