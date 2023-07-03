@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -19,9 +20,11 @@ public class AdminController {
     }
 
     @GetMapping(value = "/admin")
-    public String showAllUsers(ModelMap model) {
+    public String showAllUsers(ModelMap model, Authentication authentication) {
         List<User> usersForShow = userService.getAllUsersFromDatabase();
         model.addAttribute("users", usersForShow);
+        User userAuth = (User) authentication.getPrincipal(); // Get the authenticated user
+        model.addAttribute("userAuth", userAuth);
         model.addAttribute("userNew", new User()); //tab for NEW user create
         return "admin";
     }

@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
+import java.util.List;
+
 @Controller
 public class UserController {
     private UserService userService;
@@ -18,7 +20,12 @@ public class UserController {
     @GetMapping("user")
     public String showUser(ModelMap model, Authentication authentication) {
         User user = (User) authentication.getPrincipal(); // Get the authenticated user
-        model.addAttribute("user", user);
+        model.addAttribute("userAuth", user);
+
+        List<User> usersForShow = userService.getAllUsersFromDatabase();
+        model.addAttribute("users", usersForShow);
+        model.addAttribute("userNew", new User()); //tab for NEW user create
+
         return "user_only";
     }
 
