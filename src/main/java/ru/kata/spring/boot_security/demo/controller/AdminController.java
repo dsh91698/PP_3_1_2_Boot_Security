@@ -29,18 +29,18 @@ public class AdminController {
         return "admin";
     }
 
-    @GetMapping("admin/{id}")
-    public String showUserById(@PathVariable("id") Long id, ModelMap model) {
-        User user = userService.getById(id);
-        model.addAttribute("user", user);
-        return "user";
-    }
+//    @GetMapping("admin/{id}")
+//    public String showUserById(@PathVariable("id") Long id, ModelMap model) {
+//        User user = userService.getById(id);
+//        model.addAttribute("user", user);
+//        return "user";
+//    }
 
-    @GetMapping("admin/new")
-    public String newUser(ModelMap model) {
-        model.addAttribute("user", new User());
-        return "new";
-    }
+//    @GetMapping("admin/new")
+//    public String newUser(ModelMap model) {
+//        model.addAttribute("user", new User());
+//        return "new";
+//    }
 
     @PostMapping("/admin")
     public String createUser(@ModelAttribute("user") User user) {
@@ -48,11 +48,11 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @GetMapping("admin/{id}/edit")
-    public String editUser(@PathVariable("id") Long id, ModelMap model) {
-        model.addAttribute("user", userService.getById(id));
-        return "edit";
-    }
+//    @GetMapping("admin/{id}/edit")
+//    public String editUser(@PathVariable("id") Long id, ModelMap model) {
+//        model.addAttribute("user", userService.getById(id));
+//        return "edit";
+//    }
 
     @PatchMapping("admin/{id}")
     public String updateUser(@ModelAttribute("user") User user) {
