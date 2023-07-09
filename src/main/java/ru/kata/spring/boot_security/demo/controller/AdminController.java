@@ -1,5 +1,9 @@
 package ru.kata.spring.boot_security.demo.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -29,18 +33,48 @@ public class AdminController {
         return "admin";
     }
 
-//    @GetMapping("admin/{id}")
-//    public String showUserById(@PathVariable("id") Long id, ModelMap model) {
-//        User user = userService.getById(id);
-//        model.addAttribute("user", user);
-//        return "user";
-//    }
+// API - GET - start
+    @GetMapping(value = "api/admin/all")
+    @ResponseBody
+    public String showAllUsers() throws JsonProcessingException {
+        List<User> usersForShow = userService.getAllUsersFromDatabase();
+        ObjectMapper objectMapper = new ObjectMapper();
+        String userJson = objectMapper.writeValueAsString(usersForShow);
+        return userJson;
+    }
 
-//    @GetMapping("admin/new")
-//    public String newUser(ModelMap model) {
-//        model.addAttribute("user", new User());
-//        return "new";
-//    }
+    @GetMapping(value = "api/admin/new")
+    @ResponseBody
+    public String returnNewUser() throws JsonProcessingException {
+        User user = new User();
+        ObjectMapper objectMapper = new ObjectMapper();
+        String userJson = objectMapper.writeValueAsString(user);
+        return userJson;
+    }
+
+    @GetMapping("api/admin/{id}")
+    @ResponseBody
+    public ResponseEntity<User> showUserById(@PathVariable("id") Long id) {
+        User user = userService.getById(id);
+        if (user != null) {
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("api/admin/{id}/edit")
+    @ResponseBody
+    public ResponseEntity<User> editUser(@PathVariable("id") Long id) {
+        User user = userService.getById(id);
+        if (user != null) {
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+// API - GET - finish
 
     @PostMapping("/admin")
     public String createUser(@ModelAttribute("user") User user) {
@@ -48,11 +82,17 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-//    @GetMapping("admin/{id}/edit")
-//    public String editUser(@PathVariable("id") Long id, ModelMap model) {
-//        model.addAttribute("user", userService.getById(id));
-//        return "edit";
-//    }
+// API - POST - start
+    @PostMapping("api/admin")
+    public ResponseEntity<User> createUserApi(@RequestBody User user) {
+        try {
+            userService.addUser(user);
+            return ResponseEntity.status(HttpStatus.CREATED).body(user);//201 code - created
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();//500 code
+        }
+    }
+// API - POST - finish
 
     @PatchMapping("admin/{id}")
     public String updateUser(@ModelAttribute("user") User user) {
@@ -65,4 +105,22 @@ public class AdminController {
         userService.deleteById(id);
         return "redirect:/admin";
     }
+
+
+// API - PATCH and DELETE
+    @PatchMapping("api/admin/{id}")
+    public ResponseEntity<String> updateUserApi(@PathVariable("id") Long id, @RequestBody User user) {
+        // Update the user with the provided ID using the data in the request body
+        user.setId(id);
+        userService.updateUser(user);
+        return ResponseEntity.ok("User updated successfully");
+    }
+
+    @DeleteMapping("api/admin/{id}")
+    public ResponseEntity<String> deleteUserApi(@PathVariable("id") Long id) {
+        // Delete the user with the provided ID
+        userService.deleteById(id);
+        return ResponseEntity.ok("User deleted successfully");
+    }
+
 }
