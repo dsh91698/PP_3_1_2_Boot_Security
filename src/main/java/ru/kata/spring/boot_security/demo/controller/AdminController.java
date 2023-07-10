@@ -58,24 +58,7 @@ public class AdminController {
         }
     }
 
-    @GetMapping("api/admin/{id}/edit")
-    @ResponseBody
-    public ResponseEntity<User> editUser(@PathVariable("id") Long id) {
-        User user = userService.getById(id);
-        if (user != null) {
-            return ResponseEntity.ok(user);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
 // API - GET - finish
-
-    @PostMapping("/admin")
-    public String createUser(@ModelAttribute("user") User user) {
-        userService.addUser(user);
-        return "redirect:/admin";
-    }
 
 // API - POST - start
     @PostMapping("api/admin")
@@ -89,23 +72,9 @@ public class AdminController {
     }
 // API - POST - finish
 
-    @PatchMapping("admin/{id}")
-    public String updateUser(@ModelAttribute("user") User user) {
-        userService.updateUser(user);
-        return "redirect:/admin";
-    }
-
-    @DeleteMapping("admin/{id}")
-    public String deleteUser(@PathVariable("id") Long id) {
-        userService.deleteById(id);
-        return "redirect:/admin";
-    }
-
-
 // API - PATCH and DELETE
     @PatchMapping("api/edit/{id}")
     public ResponseEntity<String> updateUserApi(@PathVariable("id") Long id, @ModelAttribute User updatedUser) {
-        System.out.println("user -> " + updatedUser);
         userService.updateUser(updatedUser);
         return ResponseEntity.ok("{\"message\": \"User updated successfully\"}");
     }
