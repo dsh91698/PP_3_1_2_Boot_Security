@@ -405,13 +405,6 @@ function handleDelete(event, userId) {
     modal.hide();
 }
 
-// Attach submit event listeners to the forms
-let  editForms = document.querySelectorAll('.edit-form');
-editForms.forEach(form => {
-    const userId = form.getAttribute('data-user-id');
-    form.addEventListener('submit', event => handleSubmit(event, userId));
-});
-
 //---------------------------------------------------------------------------------------------
 
 //buttons
