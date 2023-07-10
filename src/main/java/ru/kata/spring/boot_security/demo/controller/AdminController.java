@@ -25,10 +25,6 @@ public class AdminController {
 
     @GetMapping(value = "/admin")
     public String showAllUsers(ModelMap model, Authentication authentication) {
-        List<User> usersForShow = userService.getAllUsersFromDatabase();
-        model.addAttribute("users", usersForShow);
-        User userAuth = (User) authentication.getPrincipal(); // Get the authenticated user
-        model.addAttribute("userAuth", userAuth);
         model.addAttribute("userNew", new User()); //tab for NEW user create
         return "admin";
     }
@@ -55,6 +51,7 @@ public class AdminController {
     @GetMapping("api/admin/{id}")
     @ResponseBody
     public ResponseEntity<User> showUserById(@PathVariable("id") Long id) {
+//        Long id = Long.parseLong(idStr);
         User user = userService.getById(id);
         if (user != null) {
             return ResponseEntity.ok(user);
@@ -108,19 +105,19 @@ public class AdminController {
 
 
 // API - PATCH and DELETE
-    @PatchMapping("api/admin/{id}")
-    public ResponseEntity<String> updateUserApi(@PathVariable("id") Long id, @RequestBody User user) {
-        // Update the user with the provided ID using the data in the request body
-        user.setId(id);
-        userService.updateUser(user);
-        return ResponseEntity.ok("User updated successfully");
+    @PatchMapping("api/edit/{id}")
+    public ResponseEntity<String> updateUserApi(@PathVariable("id") Long id, @ModelAttribute User updatedUser) {
+        System.out.println("user -> " + updatedUser);
+//        user.setId(id);
+        userService.updateUser(updatedUser);
+        return ResponseEntity.ok("{\"message\": \"User updated successfully\"}");
     }
 
-    @DeleteMapping("api/admin/{id}")
+    @DeleteMapping("api/delete/{id}")
     public ResponseEntity<String> deleteUserApi(@PathVariable("id") Long id) {
         // Delete the user with the provided ID
         userService.deleteById(id);
-        return ResponseEntity.ok("User deleted successfully");
+        return ResponseEntity.ok("{\"message\": \"User deleted successfully\"}");
     }
 
 }
