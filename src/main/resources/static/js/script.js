@@ -540,6 +540,27 @@ function handleNewUserCreate(event) {
         .catch(error => {
             console.error('Error:', error);
         });
+    // By ID
+    // const tabId = 'nav-home'; // Set the ID of the tab to be shown
+    // const tab = bootstrap.Tab.getInstance(document.getElementById(tabId));
+    // tab.show();
+
+    const tabId = 'nav-home'; // Set the ID of the tab to be shown
+    const tabLink = document.querySelector(`a[href="#${tabId}"]`);
+    const tabPane = document.querySelector(`#${tabId}`);
+
+    tabLink.classList.add('active');
+    tabLink.setAttribute('aria-selected', 'true');
+    tabPane.classList.add('show', 'active');
+
+    const tabIdHide = 'nav-profile'; // Set the ID of the tab to be shown
+    const tabLinkHide = document.querySelector(`a[href="#${tabIdHide}"]`);
+    const tabPaneHide = document.querySelector(`#${tabIdHide}`);
+
+    tabLinkHide.classList.remove('active');
+    tabLinkHide.setAttribute('aria-selected', 'false');
+    tabPaneHide.classList.remove('show', 'active');
+
 }
 
 //---------------------------------------------------------------------------------------------
