@@ -83,7 +83,6 @@ public class AdminController {
 // API - POST - start
     @PostMapping("api/admin")
     public ResponseEntity<User> createUserApi(@ModelAttribute User user) {
-        System.out.println("user api/admin post -> " + user);
         try {
             userService.addUser(user);
             return ResponseEntity.status(HttpStatus.CREATED).body(user);//201 code - created
@@ -110,7 +109,6 @@ public class AdminController {
     @PatchMapping("api/edit/{id}")
     public ResponseEntity<String> updateUserApi(@PathVariable("id") Long id, @ModelAttribute User updatedUser) {
         System.out.println("user -> " + updatedUser);
-//        user.setId(id);
         userService.updateUser(updatedUser);
         return ResponseEntity.ok("{\"message\": \"User updated successfully\"}");
     }

@@ -472,11 +472,8 @@ function handleSubmit(event, userId) {
     })
         .then(response => console.log('handler -> ',response.json()))
         .then(data => {
-            // Handle the response data
-            console.log(data);
             fetchAuthUserData()
                 .then(data => {
-                    console.log('auth user-> ', data )
                     populateTable(data);
                 });
 
@@ -504,8 +501,6 @@ function handleDelete(event, userId) {
     })
         .then(response => console.log('handler -> ',response.json()))
         .then(data => {
-            // Handle the response data
-            console.log(data);
             // Fetch all users data
             fetchAllUsersData()
                 .then(data => {
@@ -529,8 +524,6 @@ function handleNewUserCreate(event) {
     })
         .then(response => console.log('handler -> ', response.json()))
         .then(data => {
-            // Handle the response data
-            console.log(data);
             // Fetch all users data
             fetchAllUsersData()
                 .then(data => {
@@ -540,11 +533,7 @@ function handleNewUserCreate(event) {
         .catch(error => {
             console.error('Error:', error);
         });
-    // By ID
-    // const tabId = 'nav-home'; // Set the ID of the tab to be shown
-    // const tab = bootstrap.Tab.getInstance(document.getElementById(tabId));
-    // tab.show();
-
+//
     const tabId = 'nav-home'; // Set the ID of the tab to be shown
     const tabLink = document.querySelector(`a[href="#${tabId}"]`);
     const tabPane = document.querySelector(`#${tabId}`);
@@ -552,7 +541,7 @@ function handleNewUserCreate(event) {
     tabLink.classList.add('active');
     tabLink.setAttribute('aria-selected', 'true');
     tabPane.classList.add('show', 'active');
-
+//
     const tabIdHide = 'nav-profile'; // Set the ID of the tab to be shown
     const tabLinkHide = document.querySelector(`a[href="#${tabIdHide}"]`);
     const tabPaneHide = document.querySelector(`#${tabIdHide}`);
@@ -560,7 +549,6 @@ function handleNewUserCreate(event) {
     tabLinkHide.classList.remove('active');
     tabLinkHide.setAttribute('aria-selected', 'false');
     tabPaneHide.classList.remove('show', 'active');
-
 }
 
 //---------------------------------------------------------------------------------------------
