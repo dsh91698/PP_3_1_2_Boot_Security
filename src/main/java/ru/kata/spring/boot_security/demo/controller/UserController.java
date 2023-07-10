@@ -20,19 +20,24 @@ public class UserController {
 
     @GetMapping("user")
     public String showUser(ModelMap model, Authentication authentication) {
-        User user = (User) authentication.getPrincipal(); // Get the authenticated user
-        model.addAttribute("userAuth", user);
         return "user_only";
     }
 
+//    @GetMapping("api/user")
+//    @ResponseBody
+//    public String showUser(Authentication authentication) throws JsonProcessingException {
+//        User user = (User) authentication.getPrincipal(); // Get the authenticated user
+//        // Create an ObjectMapper to convert the User object to JSON
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        String userJson = objectMapper.writeValueAsString(user);
+//        return userJson;
+//    }
+
     @GetMapping("api/user")
     @ResponseBody
-    public String showUser(Authentication authentication) throws JsonProcessingException {
-        User user = (User) authentication.getPrincipal(); // Get the authenticated user
-        // Create an ObjectMapper to convert the User object to JSON
-        ObjectMapper objectMapper = new ObjectMapper();
-        String userJson = objectMapper.writeValueAsString(user);
-        return userJson;
+    public User showUser(Authentication authentication) {
+        return (User) authentication.getPrincipal();
     }
+
 
 }
