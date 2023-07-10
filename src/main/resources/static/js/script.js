@@ -19,25 +19,38 @@ function fetchAllUsersData() {
         });
 }
 
+// Function to fetch NEW user data
+function fetchNewUserData() {
+    return fetch('/api/admin/new')
+        .then(response => response.json())
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
 // Fetch data from the API when the page loads
 window.addEventListener('load', () => {
     // Fetch authenticated user data
     fetchAuthUserData()
         .then(data => {
-            authUserData = data;
             populateTable(data);
+        });
+    // Fetch new user data
+    fetchNewUserData()
+        .then(data => {
+            populateNewUserTable(data);
         });
 
     // Fetch all users data
     fetchAllUsersData()
         .then(data => {
-            allUsersData = data;
             populateTableAll(data);
         });
 });
 
 const tableBody = document.querySelector('#userTable tbody');//one user table
 const tableBodyAll = document.querySelector('#allTable tbody');//ALL users table
+const formNewUser = document.querySelector('#new-user-form');//NEW user form
 
 
 // Function to populate the table with user data
@@ -314,7 +327,7 @@ function populateTableAll(userData) {// for ALL users from array
     });
 }
 
-function populateTable(userData) { //for ONE user
+function populateTable(userData) {
     // Clear existing table rows
     tableBody.innerHTML = '';
 
@@ -340,6 +353,106 @@ function populateTable(userData) { //for ONE user
     // Append the row to the table body
     tableBody.appendChild(row);
 }
+
+function populateNewUserTable(userData) {
+    // Clear existing table rows
+    formNewUser.innerHTML = '';
+
+    // Create form row  for each data field
+    const nameCell = document.createElement( 'row');
+    nameCell.innerHTML = `
+            <div class="row mb-3 col-md-6 mx-auto position-relative justify-content-center">
+            <label for="name" class="form-label fw-bold text-center col-sm-4">User Name</label>
+            <input type="text" field='${userData.userName}' id="name" class="form-control" required
+                   oninput="changeInputBackground(this)"
+                   name="userName">
+            </div>
+    `;
+
+    const statusCell = document.createElement( 'row');
+    statusCell.innerHTML = `
+                            <div class="row mb-3 col-md-6 mx-auto justify-content-center">
+                            <label for="age" class="form-label fw-bold text-center col-sm-4"> Age</label>
+                            <input type="number" field="${userData.userAge}" id="age" class="form-control"
+                                   placeholder="Enter an age"
+                                   min="18" oninput="changeInputBackground(this)"
+                                   name="userAge">
+                        </div>
+    `;
+
+    const ageCell = document.createElement( 'row');
+    ageCell.innerHTML = `
+                            <div class="row mb-3 col-md-6 mx-auto justify-content-center">
+                            <label for="status" class="form-label fw-bold text-center col-sm-4"> Status</label>
+                            <select field="${userData.userStatus}" id="status" class="form-select" name="userStatus">
+                                <option value="active">Active</option>
+                                <option value="banned">Banned</option>
+                                <option value="read-only">Read-only</option>
+                                <option value="registered">Registered</option>
+                            </select>
+                        </div>
+
+    `;
+
+    const emailCell = document.createElement( 'row');
+    emailCell.innerHTML = `
+                            <div class="row mb-3 col-md-6 mx-auto justify-content-center">
+                            <label for="login" class="form-label fw-bold text-center col-sm-4"> Email</label>
+                            <input type="text" field="${userData.login}" id="login" class="form-control" required
+                                   oninput="changeInputBackground(this)"
+                                   name="login">
+                            </div>
+    `;
+
+    const passwordCell = document.createElement( 'row');
+    passwordCell.innerHTML = `
+                            <div class="row mb-3 col-md-6 mx-auto justify-content-center">
+                            <label for="password" class="form-label fw-bold text-center col-sm-4"> Password</label>
+                            <input type="password" th:field="*{password}" id="password" class="form-control" required
+                                   oninput="changeInputBackground(this)"
+                                   name="password">
+                            </div>
+    `;
+
+    const roleCell = document.createElement( 'row');
+    roleCell.innerHTML = `
+                            <div class="row mb-3 col-md-6  mx-auto justify-content-center">
+                            <label class="form-label fw-bold text-center col-sm-4"> Role</label>
+                            <div class="form-check">
+                                <input type="checkbox" id="userRole" name="roles" value="ROLE_USER" checked
+                                       class="form-check-input">
+                                <label for="userRole" class="form-check-label">USER</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" id="adminRole" name="roles" value="ROLE_ADMIN" 
+                                       class="form-check-input">
+                                <label for="adminRole" class="form-check-label">ADMIN</label>
+                            </div>
+                        </div>
+
+    `;
+
+    const submitBtn = document.createElement( 'row');
+    submitBtn.innerHTML = `
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success">Add new User</button>
+                        </div>
+    `;
+
+    //
+    // Append the cells to the form
+    formNewUser.appendChild(nameCell);
+    formNewUser.appendChild(statusCell);
+    formNewUser.appendChild(ageCell);
+    formNewUser.appendChild(emailCell);
+    formNewUser.appendChild(passwordCell);
+    formNewUser.appendChild(roleCell);
+    formNewUser.appendChild(submitBtn);
+    //
+    //new user handler
+        formNewUser.addEventListener('submit', event => handleNewUserCreate(event));
+}
+
 // Function to create a table cell with the given text content
 function createTableCell(text) {
     const cell = document.createElement('td');
@@ -380,6 +493,7 @@ function handleSubmit(event, userId) {
     const modal = bootstrap.Modal.getInstance(document.getElementById(`editModal-${userId}`));
     modal.hide();
 }
+
 function handleDelete(event, userId) {
     event.preventDefault();
 
@@ -403,6 +517,29 @@ function handleDelete(event, userId) {
         });
     const modal = bootstrap.Modal.getInstance(document.getElementById(`delModal-${userId}`));
     modal.hide();
+}
+
+function handleNewUserCreate(event) {
+    event.preventDefault();
+
+    // Make an API call using the Fetch API to handle form submission
+    fetch(`/api/admin/`, {
+        method: 'POST',
+        body: new FormData(event.target),
+    })
+        .then(response => console.log('handler -> ', response.json()))
+        .then(data => {
+            // Handle the response data
+            console.log(data);
+            // Fetch all users data
+            fetchAllUsersData()
+                .then(data => {
+                    populateTableAll(data);
+                });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 }
 
 //---------------------------------------------------------------------------------------------

@@ -147,63 +147,10 @@
                         <p class="h4">Add new user</p>
                     </div>
                     <!--form for NEW user---------START------------->
-                    <form th:method="POST" th:action="@{/admin}" th:object="${userNew}"
-                          class="needs-validation row g-3 p-3 d-flex flex-column align-items-center border p-0 m-0 bg-body">
-
-                        <div class="row mb-3 col-md-6 mx-auto position-relative justify-content-center">
-                            <label for="name" class="form-label fw-bold text-center col-sm-4">User Name</label>
-                            <input type="text" th:field="*{userName}" id="name" class="form-control" required
-                                   oninput="changeInputBackground(this)">
-                        </div>
-
-                        <div class="row mb-3 col-md-6 mx-auto justify-content-center">
-                            <label for="age" class="form-label fw-bold text-center col-sm-4"> Age</label>
-                            <input type="number" th:field="*{userAge}" id="age" class="form-control"
-                                   placeholder="Enter an age"
-                                   min="18" oninput="changeInputBackground(this)">
-                        </div>
-
-                        <div class="row mb-3 col-md-6 mx-auto justify-content-center">
-                            <label for="status" class="form-label fw-bold text-center col-sm-4"> Status</label>
-                            <select th:field="*{userStatus}" id="status" class="form-select">
-                                <option value="active">Active</option>
-                                <option value="banned">Banned</option>
-                                <option value="read-only">Read-only</option>
-                                <option value="registered">Registered</option>
-                            </select>
-                        </div>
-
-                        <div class="row mb-3 col-md-6 justify-content-center">
-                            <label class="form-label fw-bold text-center col-sm-4"> Role</label>
-                            <div class="form-check">
-                                <input type="checkbox" id="userRole" name="roles" value="ROLE_USER" th:checked="true"
-                                       class="form-check-input">
-                                <label for="userRole" class="form-check-label">USER</label>
-                            </div>
-                            <div class="form-check">
-                                <input type="checkbox" id="adminRole" name="roles" value="ROLE_ADMIN" th:checked="false"
-                                       class="form-check-input">
-                                <label for="adminRole" class="form-check-label">ADMIN</label>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3 col-md-6 justify-content-center">
-                            <label for="login" class="form-label fw-bold text-center col-sm-4"> Email</label>
-                            <input type="text" th:field="*{login}" id="login" class="form-control" required
-                                   oninput="changeInputBackground(this)">
-                        </div>
-
-                        <div class="row mb-3 col-md-6 justify-content-center">
-                            <label for="password" class="form-label fw-bold text-center col-sm-4"> Password</label>
-                            <input type="password" th:field="*{password}" id="password" class="form-control" required
-                                   oninput="changeInputBackground(this)">
-                        </div>
-
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-success">Add new User</button>
-                        </div>
+                    <form method="POST" action="api/admin"
+                          class="needs-validation row g-3 p-3 d-flex flex-column align-items-center border p-0 m-0 bg-body"
+                          id="new-user-form">
                     </form>
-
                     <!--form for NEW user------------FINISH-------------->
 
                 </div>

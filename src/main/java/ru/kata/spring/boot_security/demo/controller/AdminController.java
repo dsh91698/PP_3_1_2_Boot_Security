@@ -43,6 +43,7 @@ public class AdminController {
     @ResponseBody
     public String returnNewUser() throws JsonProcessingException {
         User user = new User();
+        System.out.println("new user" + user);
         ObjectMapper objectMapper = new ObjectMapper();
         String userJson = objectMapper.writeValueAsString(user);
         return userJson;
@@ -81,7 +82,8 @@ public class AdminController {
 
 // API - POST - start
     @PostMapping("api/admin")
-    public ResponseEntity<User> createUserApi(@RequestBody User user) {
+    public ResponseEntity<User> createUserApi(@ModelAttribute User user) {
+        System.out.println("user api/admin post -> " + user);
         try {
             userService.addUser(user);
             return ResponseEntity.status(HttpStatus.CREATED).body(user);//201 code - created
