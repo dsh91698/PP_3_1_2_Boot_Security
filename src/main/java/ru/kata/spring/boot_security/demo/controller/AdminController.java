@@ -25,7 +25,6 @@ public class AdminController {
 
     @GetMapping(value = "/admin")
     public String showAllUsers(ModelMap model, Authentication authentication) {
-        model.addAttribute("userNew", new User()); //tab for NEW user create
         return "admin";
     }
 
@@ -43,7 +42,6 @@ public class AdminController {
     @ResponseBody
     public String returnNewUser() throws JsonProcessingException {
         User user = new User();
-        System.out.println("new user" + user);
         ObjectMapper objectMapper = new ObjectMapper();
         String userJson = objectMapper.writeValueAsString(user);
         return userJson;
@@ -52,7 +50,6 @@ public class AdminController {
     @GetMapping("api/admin/{id}")
     @ResponseBody
     public ResponseEntity<User> showUserById(@PathVariable("id") Long id) {
-//        Long id = Long.parseLong(idStr);
         User user = userService.getById(id);
         if (user != null) {
             return ResponseEntity.ok(user);
