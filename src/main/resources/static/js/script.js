@@ -373,7 +373,7 @@ function populateNewUserTable(userData) {
     statusCell.innerHTML = `
                             <div class="row mb-3 col-md-6 mx-auto justify-content-center">
                             <label for="age" class="form-label fw-bold text-center col-sm-4"> Age</label>
-                            <input type="number" field="${userData.userAge}" id="age" class="form-control"
+                            <input type="number" field="${userData.userAge}" id="age" class="form-control" required
                                    placeholder="Enter an age"
                                    min="18" oninput="changeInputBackground(this)"
                                    name="userAge">
