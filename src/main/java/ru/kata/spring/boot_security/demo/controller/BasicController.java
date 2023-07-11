@@ -29,5 +29,15 @@ public class BasicController {
         }
         return "redirect:/";
     }
+    // ----- user controller ----- //
+    @GetMapping("user")
+    public String showUser() {
+        return "user_only";
+    }
+    // ----- admin controller --- //
+    @GetMapping(value = "/admin")
+    public String showAllUsers() {
+        return "admin";
+    }
 
 }
