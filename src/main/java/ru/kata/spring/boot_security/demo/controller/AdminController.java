@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.User;
@@ -14,7 +15,7 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.util.List;
 
-@Controller
+@RestController
 @Secured("ROLE_ADMIN")
 public class AdminController {
     private UserService userService;
@@ -23,14 +24,8 @@ public class AdminController {
         this.userService = userService;
     }
 
-    @GetMapping(value = "/admin")
-    public String showAllUsers(ModelMap model, Authentication authentication) {
-        return "admin";
-    }
-
 // API - GET - start
     @GetMapping(value = "api/admin/all")
-    @ResponseBody
     public String showAllUsers() throws JsonProcessingException {
         List<User> usersForShow = userService.getAllUsersFromDatabase();
         ObjectMapper objectMapper = new ObjectMapper();
@@ -39,7 +34,6 @@ public class AdminController {
     }
 
     @GetMapping(value = "api/admin/new")
-    @ResponseBody
     public String returnNewUser() throws JsonProcessingException {
         User user = new User();
         ObjectMapper objectMapper = new ObjectMapper();
@@ -48,7 +42,6 @@ public class AdminController {
     }
 
     @GetMapping("api/admin/{id}")
-    @ResponseBody
     public ResponseEntity<User> showUserById(@PathVariable("id") Long id) {
         User user = userService.getById(id);
         if (user != null) {
