@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,9 +16,7 @@ public class UserController {
     }
 
     @GetMapping("api/user")
-    public User showUser(Authentication authentication) {
-        return (User) authentication.getPrincipal();
+    public ResponseEntity<User> showUser(Authentication authentication) {
+        return ResponseEntity.ok((User) authentication.getPrincipal());
     }
-
-
 }
