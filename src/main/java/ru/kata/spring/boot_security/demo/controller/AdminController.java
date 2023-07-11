@@ -1,14 +1,8 @@
 package ru.kata.spring.boot_security.demo.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
@@ -24,21 +18,15 @@ public class AdminController {
         this.userService = userService;
     }
 
-// API - GET - start
     @GetMapping(value = "api/admin/all")
-    public String showAllUsers() throws JsonProcessingException {
+    public ResponseEntity<List<User>> showAllUsers() {
         List<User> usersForShow = userService.getAllUsersFromDatabase();
-        ObjectMapper objectMapper = new ObjectMapper();
-        String userJson = objectMapper.writeValueAsString(usersForShow);
-        return userJson;
+        return ResponseEntity.ok(usersForShow);
     }
 
     @GetMapping(value = "api/admin/new")
-    public String returnNewUser() throws JsonProcessingException {
-        User user = new User();
-        ObjectMapper objectMapper = new ObjectMapper();
-        String userJson = objectMapper.writeValueAsString(user);
-        return userJson;
+    public ResponseEntity<User> returnNewUser() {
+        return ResponseEntity.ok(new User());
     }
 
     @GetMapping("api/admin/{id}")
@@ -51,8 +39,6 @@ public class AdminController {
         }
     }
 
-// API - GET - finish
-
 // API - POST - start
     @PostMapping("api/admin")
     public ResponseEntity<User> createUserApi(@ModelAttribute User user) {
@@ -63,7 +49,6 @@ public class AdminController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();//500 code
         }
     }
-// API - POST - finish
 
 // API - PATCH and DELETE
     @PatchMapping("api/edit/{id}")
